@@ -24,7 +24,7 @@ public class SpringMvcConfig implements WebMvcConfigurer {
 	public DataSource getDataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/task231db");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/task231db?useSSL=false");
 		dataSource.setUsername("root");
 		dataSource.setPassword("rooot");
 		
@@ -37,10 +37,5 @@ public class SpringMvcConfig implements WebMvcConfigurer {
 		resolver.setPrefix("/WEB-INF/views/");
 		resolver.setSuffix(".jsp");
 		return resolver;
-	}
-	
-	@Bean
-	public UserDAO getUserDAO() {
-		 return new UserDAOImpl(getDataSource());
 	}
 }

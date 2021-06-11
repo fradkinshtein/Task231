@@ -14,16 +14,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import task231.crud.model.User;
 import task231.crud.dao.UserDAO;
+import task231.crud.service.UserService;
 
 @Controller
 public class MainController {
 	
 	@Autowired
-	private UserDAO userDAO;
+	private UserService userService;
 	
 	@RequestMapping(value = "/")
 	public ModelAndView listUser(ModelAndView model){
-		List<User> listUser = userDAO.list();
+		List<User> listUser = userService.getAllUsers();
 		model.addObject("listUser", listUser);
 		model.setViewName("index");
 		return model;
@@ -40,9 +41,9 @@ public class MainController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public ModelAndView saveUser(@ModelAttribute User user) {
 		if(user.getId() == null) {
-			userDAO.save(user);
+			userService.save(user);
 		} else {
-			userDAO.update(user);
+			userService.update(user);
 		}
 		return new ModelAndView("redirect:/");
 	}
@@ -50,7 +51,7 @@ public class MainController {
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView editUser(HttpServletRequest request) {
 		Integer id = Integer.parseInt(request.getParameter("id"));
-		User user = userDAO.get(id);
+		User user = userService.get(id);
 		
 		ModelAndView model = new ModelAndView("user_form");
 		
@@ -61,7 +62,7 @@ public class MainController {
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView deleteUser(@RequestParam Integer id) {
-		userDAO.delete(id);
+		userService.delete(id);
 		return new ModelAndView("redirect:/");
 	}
 	

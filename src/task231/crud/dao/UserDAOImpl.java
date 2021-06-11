@@ -12,8 +12,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
+import org.springframework.stereotype.Repository;
 import task231.crud.model.User;
 
+@Repository
 public class UserDAOImpl implements UserDAO {
 	private JdbcTemplate jdbcTemplate;
 
@@ -36,7 +38,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User get(Integer id) {
-		String sql = "SELECT * FROM users WHERE users_id=" + id;
+		String sql = "SELECT * FROM users WHERE user_id=" + id;
 		ResultSetExtractor<User> extractor = new ResultSetExtractor<User>() {
 			@Override
 			public User extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -61,7 +63,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public List<User> list() {
+	public List<User> getAllUsers() {
 		String sql = "SELECT * FROM users";
 		RowMapper<User> rowMapper = new RowMapper<User>() {
 			@Override

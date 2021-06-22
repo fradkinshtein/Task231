@@ -25,20 +25,20 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public int save(User u) {
-		String sql = "INSERT INTO users (name, email, address, phone) VALUES (?,?,?,?)";
-		return jdbcTemplate.update(sql, u.getName(), u.getEmail(), u.getAddress(), u.getPhone());
+		String sql = "INSERT INTO users (name, email, address, phone, username, password) VALUES (?,?,?,?,?,?)";
+		return jdbcTemplate.update(sql, u.getName(), u.getEmail(), u.getAddress(), u.getPhone(), u.getUsername(), u.getPassword());
 	}
 
 	@Override
 	public int update(User u) {
-		String sql = "UPDATE users Set name=?, email=?, address=?, phone=? WHERE user_id=?";
-		return jdbcTemplate.update(sql, u.getName(), u.getEmail(), u.getAddress(), u.getPhone(), u.getId());
+		String sql = "UPDATE users Set name=?, email=?, address=?, username=?, password=?, phone=? WHERE id=?";
+		return jdbcTemplate.update(sql, u.getName(), u.getEmail(), u.getAddress(), u.getPhone(), u.getUsername(), u.getPassword(), u.getId());
 
 	}
 
 	@Override
 	public User get(Integer id) {
-		String sql = "SELECT * FROM users WHERE user_id=" + id;
+		String sql = "SELECT * FROM users WHERE id=" + id;
 		ResultSetExtractor<User> extractor = new ResultSetExtractor<User>() {
 			@Override
 			public User extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -47,7 +47,9 @@ public class UserDAOImpl implements UserDAO {
 					String email = rs.getString("email");
 					String address = rs.getString("address");
 					String phone = rs.getString("phone");
-					return new User(id, name, email, address, phone);
+					String username = rs.getString("username");
+					String password = rs.getString("password");
+					return new User(id, name, email, address, phone, username, password);
 				}
 				return null;
 			}
@@ -57,7 +59,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public int delete(Integer id) {
-		String sql = "DELETE FROM users WHERE user_id =" + id;
+		String sql = "DELETE FROM users WHERE id =" + id;
 
 		return jdbcTemplate.update(sql);
 	}
@@ -68,12 +70,14 @@ public class UserDAOImpl implements UserDAO {
 		RowMapper<User> rowMapper = new RowMapper<User>() {
 			@Override
 			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Integer id = rs.getInt("user_id");
+				Integer id = rs.getInt("id");
 				String name = rs.getString("name");
 				String email = rs.getString("email");
 				String address = rs.getString("address");
 				String phone = rs.getString("phone");
-				return new User(id, name, email, address, phone);
+				String username = rs.getString("username");
+				String password = rs.getString("password");
+				return new User(id, name, email, address, phone, username, password);
 			}
 		};
 		

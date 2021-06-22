@@ -30,6 +30,14 @@
 					<td><form:input path="phone" /></td>
 				</tr>
 				<tr>
+					<td>Username:</td>
+					<td><form:input path="username" /></td>
+				</tr>
+				<tr>
+					<td>Password:</td>
+					<td><form:input path="password" /></td>
+				</tr>
+				<tr>
 					<td colspan="2" align="center"><input type = "submit" value = "Save"></td>
 				</tr>
 			</table>

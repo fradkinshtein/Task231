@@ -18,6 +18,8 @@
 				<th>Email</th>
 				<th>Address</th>
 				<th>Phone</th>
+				<th>Username</th>
+				<th>Password</th>
 				<th>Action</th>
 			</tr>
 			<c:forEach items="${listUser}" var="user" varStatus="status">
@@ -27,11 +29,14 @@
 					<td>${user.email}</td>
 					<td>${user.address}</td>
 					<td>${user.phone}</td>
+					<td>${user.username}</td>
+					<td>${user.password}</td>
 					<td>
 					<a href="edit?id=${user.id}"><input type="button" value="Edit"></a>
 					&nbsp; &nbsp;
 					<a href="delete?id=${user.id}"><input type="button" value="Delete"></a> 
 					</td>
+
 				</tr>
 			</c:forEach>
 		</table>
